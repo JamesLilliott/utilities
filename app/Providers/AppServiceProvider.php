@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Forecast\AwsForecastRepository;
+use App\Repositories\Forecast\ForecastRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(
+            ForecastRepositoryInterface::class,
+            AwsForecastRepository::class
+        );
     }
 }
