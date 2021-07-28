@@ -20,3 +20,6 @@ Route::get('/', function () {
 Route::get('/health', function () {
     return "OK";
 });
+
+Route::resource('forecast', \App\Http\Controllers\ForecastController::class);
+
