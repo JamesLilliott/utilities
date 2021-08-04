@@ -21,5 +21,6 @@ Route::get('/health', function () {
     return "OK";
 });
 
-Route::resource('forecast', \App\Http\Controllers\ForecastController::class);
+Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
+Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
 

@@ -9,12 +9,19 @@ use Carbon\Carbon;
 
 class ForecastController extends Controller
 {
+    public function __construct(private ForecastService $forecastService) {}
+
     public function index()
     {
         return view('forecast.index');
     }
 
-    public function store(ForecastPostRequest $request, ForecastService $forecastService)
+    public function create()
+    {
+        return view('forecast.create');
+    }
+
+    public function store(ForecastPostRequest $request)
     {
         $forecastInquiry = ForecastInquiry::make(
             $request->get('location'),
@@ -22,8 +29,22 @@ class ForecastController extends Controller
             Carbon::create($request->get('date')),
         );
 
-        $forecastService->create($forecastInquiry);
+        $this->forecastService->create($forecastInquiry);
 
-        return view('forecast.stored');
+        return view('forecast.store', ['forecastInquiry' => $forecastInquiry]);
+    }
+
+    public function show(string $id)
+    {
+        $forecastInquiries = $this->forecastService->getItems($id, '21');
+
+        return view('forecast.index', ['items' => $forecastInquiries]);
+    }
+
+    public function showWithDate(string $id, string $date)
+    {
+        $forecastInquiries = $this->forecastService->getItems($id, $date);
+
+        return view('forecast.index', ['items' => $forecastInquiries]);
     }
 }

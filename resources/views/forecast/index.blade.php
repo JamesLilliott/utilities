@@ -1,31 +1,16 @@
 <html>
     <body>
         <h1>Forecast Notifier</h1>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form method="post" action="/forecast">
-            @csrf
-            <label>Phone Number:</label>
-            <input name="phone-number" type="text">
-            <br>
-            <label>Notification Date:</label>
-            <input name="date" type="date">
-            <br>
-            <select name="location">
-                <option value="" selected>Select a Location</option>
-                <option value="1">Bolton</option>
-            </select>
-            <br>
-            <button type="submit">Create Notification</button>
-        </form>
+            @if(!empty($items))
+                @foreach($items as $item)
+                   <div style="border: #1a202c solid 1px">
+                       <p><b>Number: </b>{{$item->phoneNumber}}</p>
+                       <p><b>Date: </b>{{$item->date->format('d-m-y')}}</p>
+                       <p><b>Location: </b>{{$item->locationId}}</p>
+                   </div>
+                @endforeach
+            @else
+                <a href="/forecast/create">Create Forecast Notification</a>
+            @endif
     </body>
 </html>

@@ -1,0 +1,1 @@
+aws dynamodb create-table --endpoint=http://localhost:8000 --table-name=ForecastInquiries --attribute-definitions AttributeName=Number,AttributeType=S AttributeName=DateLocation,AttributeType=S --key-schema AttributeName=Number,KeyType=HASH AttributeName=DateLocation,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5

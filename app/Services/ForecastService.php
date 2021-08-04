@@ -7,15 +7,15 @@ use App\Repositories\Forecast\ForecastRepositoryInterface;
 
 class ForecastService
 {
-    private ForecastRepositoryInterface $forecastRepository;
-
-    public function __construct(ForecastRepositoryInterface $forecastRepository)
-    {
-        $this->forecastRepository = $forecastRepository;
-    }
+    public function __construct(private ForecastRepositoryInterface $forecastRepository) {}
 
     public function create(ForecastInquiry $forecastInquiry)
     {
         return $this->forecastRepository->createItem($forecastInquiry);
+    }
+
+    public function getItems(string $number, string $date): \Illuminate\Support\Collection
+    {
+        return $this->forecastRepository->getItems($number, $date);
     }
 }
