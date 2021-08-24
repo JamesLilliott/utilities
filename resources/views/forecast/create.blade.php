@@ -15,15 +15,12 @@
     <form method="post" action="/forecast">
         @csrf
         <label>Phone Number:</label>
-        <input name="phone-number" type="text">
+        <input name="mobile_number" type="text">
         <br>
         <label>Notification Date:</label>
-        <input name="date" type="date">
+        <input name="schedule_date" type="date">
         <br>
-        <select name="location">
-            <option value="" selected>Select a Location</option>
-            <option value="1">Bolton</option>
-        </select>
+        <x-forecast-location-select/>
         <br>
         <button type="submit">Create Notification</button>
     </form>

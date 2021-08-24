@@ -3,33 +3,32 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
-class ForecastInquiry
+/**
+ * Class ForecastInquiry
+ *
+ * @package App\Models
+ * @property string $location
+ * @property string $mobile_number
+ * @property Carbon schedule_date
+ * @method static create(array $array)
+ */
+class ForecastInquiry extends Model
 {
-    public int $locationId;
-    public string $phoneNumber;
-    public Carbon $date;
+    protected $table = 'forecast_inquiries';
+    protected $fillable = ['location', 'mobile_number', 'schedule_date'];
 
-    /**
-     * @param int $locationId
-     * @param string $phoneNumber
-     * @param Carbon $date
-     * @return ForecastInquiry
-     */
-    public static function make(int $locationId, string $phoneNumber, Carbon $date)
+    public static function selectByMobileNumber(string $mobileNumber): \Illuminate\Database\Eloquent\Collection
     {
-        return new self($locationId, $phoneNumber, $date);
+        return self::query()->where('mobile_number', '=', $mobileNumber)->get();
     }
 
-    /**
-     * @param int $locationId
-     * @param string $phoneNumber
-     * @param Carbon $date
-     */
-    public function __construct(int $locationId, string $phoneNumber, Carbon $date)
+    public static function selectByMobileNumberAndDate(string $mobileNumber, string $date): \Illuminate\Database\Eloquent\Collection
     {
-        $this->locationId = $locationId;
-        $this->phoneNumber = $phoneNumber;
-        $this->date = $date;
+        return self::query()
+            ->where('mobile_number', '=', $mobileNumber)
+            ->where('schedule_date', '=', $date)
+            ->get();
     }
 }

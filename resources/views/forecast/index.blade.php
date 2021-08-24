@@ -2,13 +2,11 @@
     <body>
         <h1>Forecast Notifier</h1>
             @if(!empty($items))
+                <select name="city">
                 @foreach($items as $item)
-                   <div style="border: #1a202c solid 1px">
-                       <p><b>Number: </b>{{$item->phoneNumber}}</p>
-                       <p><b>Date: </b>{{$item->date->format('d-m-y')}}</p>
-                       <p><b>Location: </b>{{$item->locationId}}</p>
-                   </div>
+                    <option value="{{$item}}">{{$item}}</option>
                 @endforeach
+                </select>
             @else
                 <a href="/forecast/create">Create Forecast Notification</a>
             @endif
