@@ -14,9 +14,9 @@ class ForecastPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'location' => ['required', 'numeric'],
-            'phone-number' => ['required', 'regex:(07[\d]{8,12}|447[\d]{7,11})'],
-            'date' => ['required', 'date'],
+            'location' => ['required', 'string'],
+            'mobile_number' => ['required', 'regex:(07[\d]{8,12}|447[\d]{7,11})'],
+            'schedule_date' => ['required', 'date'],
         ];
     }
 }
