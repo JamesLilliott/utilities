@@ -3,7 +3,6 @@
 namespace App\Gateways;
 
 use App\Models\Forecast;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
@@ -11,7 +10,7 @@ use Psr\Http\Client\ClientInterface;
 class OpenWeatherMapGateway
 {
     const URL = 'https://api.openweathermap.org/data/2.5';
-    const API_KEY = '51904429e543af3db4dba4fabd2d2093';
+
     private ClientInterface $client;
 
     /**
@@ -29,7 +28,7 @@ class OpenWeatherMapGateway
     {
         $request = new Request(
             'POST',
-            self::URL . '/weather?q=' . $location . '&appid=' . self::API_KEY. ''
+            self::URL . '/weather?q=' . $location . '&appid=' . env('OPEN_WEATHER_API_KEY'). ''
         );
 
         $response = $this->client->sendRequest($request);
