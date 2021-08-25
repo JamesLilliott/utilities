@@ -17,10 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/health', function () {
-    return "OK";
+//Auth
+Route::get('login', [\App\Http\Controllers\AuthController::class, 'show'])->name('login');
+Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
+Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+
+    //Forecast
+    Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
+    Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
 });
-
-Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
-Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
-
