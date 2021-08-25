@@ -31,3 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
     Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
 });
+
+Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
+Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
+
