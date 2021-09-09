@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class ForecastInquiry extends Model
 {
     protected $table = 'forecast_inquiries';
+    protected $attributes = ['location', 'mobile_number', 'schedule_date'];
     protected $fillable = ['location', 'mobile_number', 'schedule_date'];
 
     public static function selectByMobileNumber(string $mobileNumber): \Illuminate\Database\Eloquent\Collection

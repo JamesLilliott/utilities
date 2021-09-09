@@ -50,7 +50,7 @@ class OpenWeatherMapGateway
             $forecastResponse['wind']['speed'],
             $forecastResponse['wind']['deg'],
             $forecastResponse['wind']['gust'] ?? 0,
-            $forecastResponse['rain']['1h']?? 0,
+            $forecastResponse['rain']['1h'] ?? 0,
             $forecastResponse['clouds']['all'],
             $forecastResponse['sys']['sunrise'],
             $forecastResponse['sys']['sunset'],
