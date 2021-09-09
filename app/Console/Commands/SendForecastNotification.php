@@ -7,7 +7,6 @@ use App\Gateways\SmsGateway;
 use App\Models\ForecastInquiry;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
 
 class SendForecastNotification extends Command
