@@ -33,4 +33,9 @@ Route::middleware(['auth'])->group(function () {
     //Forecast
     Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
     Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
+
+    //App of Holding
+    Route::prefix('app-of-holding')->group(function () {
+        Route::resource('/character', \App\Http\Controllers\AppOfHolding\CharacterController::class);
+    });
 });
