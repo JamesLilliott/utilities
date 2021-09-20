@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class SessionController extends Controller
 {
     public function show()
     {
-        return view('welcome');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request): \Illuminate\Http\RedirectResponse

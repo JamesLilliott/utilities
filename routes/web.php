@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 //Auth
-Route::get('login', [\App\Http\Controllers\AuthController::class, 'show'])->name('login');
-Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
-Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+Route::get('login', [\App\Http\Controllers\Auth\SessionController::class, 'show'])->name('login');
+Route::post('login', [\App\Http\Controllers\Auth\SessionController::class, 'authenticate']);
+Route::get('logout', [\App\Http\Controllers\Auth\SessionController::class, 'logout']);
+Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'create']);
+Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'store']);
 
 Route::middleware(['auth'])->group(function () {
+    // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
@@ -31,7 +34,3 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
     Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
 });
-
-Route::resource('/forecast', \App\Http\Controllers\ForecastController::class)->except(['update', 'destroy']);
-Route::get('/forecast/{id}/{date}', [\App\Http\Controllers\ForecastController::class, 'showWithDate']);
-
