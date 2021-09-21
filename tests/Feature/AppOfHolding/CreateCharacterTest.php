@@ -3,22 +3,20 @@
 namespace Tests\Feature\AppOfHolding;
 
 use App\Models\AppOfHolding\Character;
-use Illuminate\Foundation\Testing\Concerns\InteractsWithSession;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class CreateCharacterTest extends TestCase
 {
     use RefreshDatabase;
-//    use InteractsWithSession;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware();
         $this->startSession();
+        $this->loginWithFakeUser();
     }
 
     public function testCreateCharacter()
@@ -28,19 +26,20 @@ class CreateCharacterTest extends TestCase
             'strength' => 15
         ];
 
-        $this->post('app-of-holding/character', $characterAttributes)
-            ->assertSuccessful();
+        $this->followingRedirects()->post('app-of-holding/character', $characterAttributes)
+            ->assertSee($characterAttributes['name']);
+
         $this->assertDatabaseHas('characters', ['name' => $characterAttributes['name']]);
     }
 
     public function testCreationFailsOnDuplicate()
     {
         $characterAttributes = [
+            'user_id' => 1,
             'name' => 'Zorg Destroyer of worlds',
             'strength' => 15
         ];
 
-        // Set up Character
         Character::create($characterAttributes);
         $this->assertDatabaseHas('characters', ['name' => $characterAttributes['name']]);
 

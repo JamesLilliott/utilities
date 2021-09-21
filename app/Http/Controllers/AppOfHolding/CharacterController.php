@@ -5,18 +5,20 @@ namespace App\Http\Controllers\AppOfHolding;
 use App\Http\Controllers\Controller;
 use App\Models\AppOfHolding\Character;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        // Display a listing of the resource.
+        $characters = Character::where('user_id', '=', Auth::id())->get();
+
+        return view('app-of-holding.index', ['characters' => $characters]);
     }
 
     /**
@@ -33,7 +35,7 @@ class CharacterController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\View
      */
     public function store(Request $request)
     {
@@ -43,28 +45,29 @@ class CharacterController extends Controller
         ]);
 
         Character::create([
+            'user_id' => Auth::id(),
             'name' => $request->input('name'),
             'strength' => $request->input('strength')
         ]);
 
-        return view('app-of-holding.index');
+        return redirect()->action([self::class, 'index']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Character $character
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\AppOfHolding\Character $character
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(Character $character)
     {
-        //
+        return view('app-of-holding.show', ['character' => $character]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Character  $character
+     * @param  \App\Models\AppOfHolding\Character  $character
      * @return \Illuminate\Http\Response
      */
     public function edit(Character $character)
@@ -76,7 +79,7 @@ class CharacterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Character  $character
+     * @param  \App\Models\AppOfHolding\Character  $character
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Character $character)
@@ -87,11 +90,21 @@ class CharacterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Character  $character
-     * @return \Illuminate\Http\Response
+     * @param int $characterId
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Character $character)
+    public function destroy(int $characterId)
     {
-        //
+        $character = Character::findOrFail($characterId);
+        $character->forceDelete();
+        return redirect()->action([self::class, 'index']);
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(int $characterId)
+    {
+        return $this->destroy($characterId);
     }
 }

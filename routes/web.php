@@ -37,5 +37,6 @@ Route::middleware(['auth'])->group(function () {
     //App of Holding
     Route::prefix('app-of-holding')->group(function () {
         Route::resource('/character', \App\Http\Controllers\AppOfHolding\CharacterController::class);
+        Route::post('/character/delete/{Character}', [\App\Http\Controllers\AppOfHolding\CharacterController::class, 'delete']);
     });
 });
