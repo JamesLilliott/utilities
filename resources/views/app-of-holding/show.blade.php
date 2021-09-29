@@ -12,6 +12,16 @@
         <button type="submit">Delete</button>
     </form>
 </div>
+<div>
+    <h3>Inventory</h3>
+    @foreach($character->inventory()->get() as $item)
+        <p><b>Name: </b>{{$item->name}}</p>
+        <p><b>Description: </b>{{$item->description}}</p>
+        <p><b>Weight: </b>{{$item->weight}}</p>
+        <p><b>Cost: </b>{{$item->cost}}</p>
+    @endforeach
+
+</div>
 
 </body>
 </html>

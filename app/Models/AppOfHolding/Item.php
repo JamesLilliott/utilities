@@ -2,31 +2,29 @@
 
 namespace App\Models\AppOfHolding;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Character
+ * Class Item
  *
  * @package App\Models\AppOfHolding
- * @property User $user_id
  * @property string $name
- * @property int $strength
+ * @property string $description
+ * @property float $weight
+ * @property int $cost
  */
-class Character extends Model
+class Item extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'user_id',
         'name',
-        'strength',
+        'description',
+        'weight',
+        'cost'
     ];
 
     public function inventory(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Item::class)
+        return $this->belongsToMany(Character::class)
             ->as('inventory')
             ->withTimestamps();
     }
